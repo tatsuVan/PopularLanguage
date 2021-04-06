@@ -1,65 +1,200 @@
-{% extends 'base.html'%}
+{% extends 'base.html'%} {%　block body　%}
 
-{%　block body　%}
-
-<!-- <div class="container p-5">
-  <h1 class="text-center"></h1>
-</div> -->
-<!-- <div class="card mb-3 pt-1">
-  <div class="card-body text-center">
-    <h2>各国の求人数から見る人気言語</h2>
-    <p class="mb-0">from indeed</p>
-  </div>
-</div> -->
-
-
-<div class="container-fluid mb-5">
-
-  <div class="border-bottom pt-4 my-3 mx-5 text-center" style="padding:10px">
-    <h2>
-      各国の求人数から見る人気言語
-    </h2>
+<div class="container mb-5">
+  <div class="border-bottom pt-4 my-3 mx-5 text-center" style="padding: 10px">
+    <h2 style="font-style: oblique">各国の求人数から見る人気言語</h2>
     <p class="mb-0 text-muted">from indeed</p>
   </div>
-
   <div class="row g-2 mx-5">
-    {% for data in datas%}
-      <div class="col-md-4">
-        <div class="card shadow">
-          <img class="car-img-top" src="../static/{{data.country}}.png"　alt="{{data.country}}" title="{{data.country}}">
-          <div class="card-body pb-0 pt-0">
-            <h4 class="text-center mb-3">{{data.country}}</h4>
-            <div class="ml-4 text-left mojikan mt-2">
-              <p>java：{{data.java}} 件</p>
-              <p>python：{{data.python}} 件</p>
-              <p>javascript：{{data.javascript}} 件</p>
-              <p>php：{{data.php}} 件</p>
-              <p>c：{{data.c}} 件</p>
-              <p>ruby：{{data.ruby}} 件</p>
+    {% for data in datas %}
+    <div class="col-lg-4">
+      <div class="card shadow rounded">
+        <canvas id="{{data.country}}"></canvas>
+        <script>
+          var ctx = document.getElementById("{{data.country}}");
+          var myPieChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+              labels: ["Java", "Python", "Js", "Php", "C", "Ruby"],
+              datasets: [{
+                  backgroundColor: [
+                    "#000000",
+                    "#37276c",
+                    "#43c441",
+                    "#cacc4a",
+                    "#c89d07",
+                    "#c56e00",
+                  ],
+                  data: [
+                    {{data.java}},
+                    {{data.python}},
+                    {{data.javascript}},
+                    {{data.php}},
+                    {{data.c}},
+                    {{data.ruby}},
+                  ],
+              }]
+            },
+            options: {
+              plugins: {
+                labels: {
+                render: 'label',
+                position:'outside',
+                fontSize:13,
+                fontColor:'#000000',
+                }
+              },
+              legend: {
+                display:false
+              }
+            },
+          });
+        </script>
+        <div class="card-body pb-0 pt-0">
+          <h4
+            class="text-center mb-3"
+            style="font-style: oblique; font-size: 50px"
+          >
+            {{data.country}}
+          </h4>
+          <div>
+            <div
+              class="ml-4 text-left mojikan mt-2"
+              style="font-style: oblique"
+            >
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <td>java</td>
+                    <td>{{data.java}} 件</td>
+                  </tr>
+                  <tr>
+                    <td>python</td>
+                    <td>{{data.python}} 件</td>
+                  </tr>
+                  <tr>
+                    <td>javascript</td>
+                    <td>{{data.javascript}} 件</td>
+                  </tr>
+                  <tr>
+                    <td>php</td>
+                    <td>{{data.php}} 件</td>
+                  </tr>
+                  <tr>
+                    <td>c</td>
+                    <td>{{data.c}} 件</td>
+                  </tr>
+                  <tr>
+                    <td>ruby</td>
+                    <td>{{data.ruby}} 件</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>  
-          <p class="text-end mb-0 small">{{data.date}}</p>
+          </div>
+          <div class="container p-0">
+            <p class="text-end mb-0 small" style="font-style: oblique">
+              最終更新日{{data.date}}
+            </p>
+          </div>
         </div>
       </div>
-    {% endfor%}
-    <div class="col-md-4 mx-auto">
-      <div class="card shadow">
-        <img class="car-img-top" src="../static/world.png"　alt="world" title="world">
+    </div>
+    {% endfor %}
+    <div class="col-lg-4 mx-auto">
+      <div class="card shadow rounded">
+        <canvas id="{{wr_data.country}}"></canvas>
+        <script>
+          var ctx = document.getElementById("{{wr_data.country}}");
+          var myPieChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+              labels: ["Java", "Python", "Js", "Php", "C", "Ruby"],
+              datasets: [{
+                  backgroundColor: [
+                    "#000000",
+                    "#37276c",
+                    "#43c441",
+                    "#cacc4a",
+                    "#c89d07",
+                    "#c56e00",
+                  ],
+                  data: [
+                    {{wr_data.java}},
+                    {{wr_data.python}},
+                    {{wr_data.javascript}},
+                    {{wr_data.php}},
+                    {{wr_data.c}},
+                    {{wr_data.ruby}},
+                  ],
+              }]
+            },
+            options: {
+              plugins: {
+                labels: {
+                render: 'label',
+                position:'outside',
+                fontSize:13,
+                fontColor:'#000000',
+                }
+              },
+              legend: {
+                display:false
+              }
+            },
+          });
+        </script>
         <div class="card-body pb-0 pt-0">
-          <h4 class="text-center mb-3">{{wr_data.country}}</h4>
-          <div class="ml-4 text-left mojikan mt-2">
-            <p>java：{{wr_data.java}} 件</p>
-            <p>python：{{wr_data.python}} 件</p>
-            <p>javascript：{{wr_data.javascript}} 件</p>
-            <p>php：{{wr_data.php}} 件</p>
-            <p>c：{{wr_data.c}} 件</p>
-            <p>ruby：{{wr_data.ruby}} 件</p>
+          <h4
+            class="text-center mb-3"
+            style="font-style: oblique; font-size: 50px"
+          >
+            {{wr_data.country}}
+          </h4>
+          <div>
+            <div
+              class="ml-4 text-left mojikan mt-2"
+              style="font-style: oblique"
+            >
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <td>java</td>
+                    <td>{{wr_data.java}} 件</td>
+                  </tr>
+                  <tr>
+                    <td>python</td>
+                    <td>{{wr_data.python}} 件</td>
+                  </tr>
+                  <tr>
+                    <td>javascript</td>
+                    <td>{{wr_data.javascript}} 件</td>
+                  </tr>
+                  <tr>
+                    <td>php</td>
+                    <td>{{wr_data.php}} 件</td>
+                  </tr>
+                  <tr>
+                    <td>c</td>
+                    <td>{{wr_data.c}} 件</td>
+                  </tr>
+                  <tr>
+                    <td>ruby</td>
+                    <td>{{wr_data.ruby}} 件</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>  
-        <p class="text-end mb-0 small">{{wr_data.date}}</p>
+          <div class="container p-0">
+            <p class="text-end mb-0 small" style="font-style: oblique">
+              最終更新日{{wr_data.date}}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-{% endblock %}
+  {% endblock %}
+</div>
