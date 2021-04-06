@@ -7,7 +7,7 @@
   </div>
   <div class="row g-2 mx-5">
     {% for data in datas %}
-    <div class="col-lg-4">
+    <div class="col-xl-4">
       <div class="card shadow rounded">
         <canvas id="{{data.country}}"></canvas>
         <script>
@@ -92,107 +92,139 @@
               </table>
             </div>
           </div>
-          <div class="container p-0">
+          <!-- <div class="container p-0">
             <p class="text-end mb-0 small" style="font-style: oblique">
               最終更新日{{data.date}}
             </p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
     {% endfor %}
-    <div class="col-lg-4 mx-auto">
-      <div class="card shadow rounded">
-        <canvas id="{{wr_data.country}}"></canvas>
-        <script>
-          var ctx = document.getElementById("{{wr_data.country}}");
-          var myPieChart = new Chart(ctx, {
-            type: "pie",
-            data: {
-              labels: ["Java", "Python", "Js", "Php", "C", "Ruby"],
-              datasets: [{
-                  backgroundColor: [
-                    "#000000",
-                    "#37276c",
-                    "#43c441",
-                    "#cacc4a",
-                    "#c89d07",
-                    "#c56e00",
-                  ],
-                  data: [
-                    {{wr_data.java}},
-                    {{wr_data.python}},
-                    {{wr_data.javascript}},
-                    {{wr_data.php}},
-                    {{wr_data.c}},
-                    {{wr_data.ruby}},
-                  ],
-              }]
-            },
-            options: {
-              plugins: {
-                labels: {
-                render: 'label',
-                position:'outside',
-                fontSize:13,
-                fontColor:'#000000',
+    <!-- <div class="col-xl-4"> -->
+
+      <div class="col-xl-4">
+        <div class="card shadow rounded">
+          <canvas id="{{wr_data.country}}"></canvas>
+          <script>
+            var ctx = document.getElementById("{{wr_data.country}}");
+            var myPieChart = new Chart(ctx, {
+              type: "pie",
+              data: {
+                labels: ["Java", "Python", "Js", "Php", "C", "Ruby"],
+                datasets: [{
+                    backgroundColor: [
+                      "#000000",
+                      "#37276c",
+                      "#43c441",
+                      "#cacc4a",
+                      "#c89d07",
+                      "#c56e00",
+                    ],
+                    data: [
+                      {{wr_data.java}},
+                      {{wr_data.python}},
+                      {{wr_data.javascript}},
+                      {{wr_data.php}},
+                      {{wr_data.c}},
+                      {{wr_data.ruby}},
+                    ],
+                }]
+              },
+              options: {
+                plugins: {
+                  labels: {
+                  render: 'label',
+                  position:'outside',
+                  fontSize:13,
+                  fontColor:'#000000',
+                  }
+                },
+                legend: {
+                  display:false
                 }
               },
-              legend: {
-                display:false
-              }
-            },
-          });
-        </script>
-        <div class="card-body pb-0 pt-0">
-          <h4
-            class="text-center mb-3"
-            style="font-style: oblique; font-size: 50px"
-          >
-            {{wr_data.country}}
-          </h4>
-          <div>
-            <div
-              class="ml-4 text-left mojikan mt-2"
-              style="font-style: oblique"
+            });
+          </script>
+          <div class="card-body pb-0 pt-0">
+            <h4
+              class="text-center mb-3"
+              style="font-style: oblique; font-size: 50px"
             >
-              <table class="table table-striped">
-                <tbody>
-                  <tr>
-                    <td>java</td>
-                    <td>{{wr_data.java}} 件</td>
-                  </tr>
-                  <tr>
-                    <td>python</td>
-                    <td>{{wr_data.python}} 件</td>
-                  </tr>
-                  <tr>
-                    <td>javascript</td>
-                    <td>{{wr_data.javascript}} 件</td>
-                  </tr>
-                  <tr>
-                    <td>php</td>
-                    <td>{{wr_data.php}} 件</td>
-                  </tr>
-                  <tr>
-                    <td>c</td>
-                    <td>{{wr_data.c}} 件</td>
-                  </tr>
-                  <tr>
-                    <td>ruby</td>
-                    <td>{{wr_data.ruby}} 件</td>
-                  </tr>
-                </tbody>
-              </table>
+              {{wr_data.country}}
+            </h4>
+            <div>
+              <div
+                class="ml-4 text-left mojikan mt-2"
+                style="font-style: oblique"
+              >
+                <table class="table table-striped">
+                  <tbody>
+                    <tr>
+                      <td>java</td>
+                      <td>{{wr_data.java}} 件</td>
+                    </tr>
+                    <tr>
+                      <td>python</td>
+                      <td>{{wr_data.python}} 件</td>
+                    </tr>
+                    <tr>
+                      <td>javascript</td>
+                      <td>{{wr_data.javascript}} 件</td>
+                    </tr>
+                    <tr>
+                      <td>php</td>
+                      <td>{{wr_data.php}} 件</td>
+                    </tr>
+                    <tr>
+                      <td>c</td>
+                      <td>{{wr_data.c}} 件</td>
+                    </tr>
+                    <tr>
+                      <td>ruby</td>
+                      <td>{{wr_data.ruby}} 件</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-          <div class="container p-0">
-            <p class="text-end mb-0 small" style="font-style: oblique">
-              最終更新日{{wr_data.date}}
-            </p>
+            <!-- <div class="container p-0">
+              <p class="text-end mb-0 small" style="font-style: oblique">
+                最終更新日{{wr_data.date}}
+              </p>
+            </div> -->
           </div>
         </div>
       </div>
+      <div class="col-xl-4 pt-4 explain px-4">
+        <div class="text-center">
+          <h4 style="font-style: oblique">フロントエンド</h4>
+          <ul class="mb-5">
+            <li>HTML/CSS</li>
+            <li>Bootstrap</li>
+            <li>Cgart.js</li>
+          </ul>
+          <h4 style="font-style: oblique">バックエンド</h4>
+          <ul>
+            <li>Python/Flask</li>
+            <li>BeautifulSoup</li>
+            <li>SQLite</li>
+            <li>Heroku</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-xl-4 pt-4" style="font-style: oblique">
+        <h4 class="text-center">サイト説明</h4>
+        <p>このサイトは世界のプログラミング言語による求人数の違いが一目で分かります</p>
+        <p>Python(BeautifulSoup)を使ったスクレイピングでIndeedから求人件数を取得しSQLiteへ保存。データを取り出しChart.jsを使用してグラフ化しています。サーバーはHerokuを利用しスケジューラーを使うことで毎日自動更新しています。</p>
+        <h4 class="text-center">世界はPython, Js, Javaの３強</h4>
+        <h4 class="mb-3 text-center">日本はPhp, Javaの2強</h4>
+         <p class="mb-0">＜日本の特徴＞</p>
+         <p>Python, Javascriptの割合が少なくPhpのシェアが世界と比べると圧倒的に大きい</p>
+         <p class="mb-0">＜世界の特徴＞</p>
+         <p>Pythonのシェアが非常に大きく、特にアメリカ・シンガポールではJavaを抜いて一番となっている</p>
+      </div>
+     
     </div>
   </div>
 
