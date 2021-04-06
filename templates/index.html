@@ -1,0 +1,65 @@
+{% extends 'base.html'%}
+
+{%　block body　%}
+
+<!-- <div class="container p-5">
+  <h1 class="text-center"></h1>
+</div> -->
+<!-- <div class="card mb-3 pt-1">
+  <div class="card-body text-center">
+    <h2>各国の求人数から見る人気言語</h2>
+    <p class="mb-0">from indeed</p>
+  </div>
+</div> -->
+
+
+<div class="container-fluid mb-5">
+
+  <div class="border-bottom pt-4 my-3 mx-5 text-center" style="padding:10px">
+    <h2>
+      各国の求人数から見る人気言語
+    </h2>
+    <p class="mb-0 text-muted">from indeed</p>
+  </div>
+
+  <div class="row g-2 mx-5">
+    {% for data in datas%}
+      <div class="col-md-4">
+        <div class="card shadow">
+          <img class="car-img-top" src="../static/{{data.country}}.png"　alt="{{data.country}}" title="{{data.country}}">
+          <div class="card-body pb-0 pt-0">
+            <h4 class="text-center mb-3">{{data.country}}</h4>
+            <div class="ml-4 text-left mojikan mt-2">
+              <p>java：{{data.java}} 件</p>
+              <p>python：{{data.python}} 件</p>
+              <p>javascript：{{data.javascript}} 件</p>
+              <p>php：{{data.php}} 件</p>
+              <p>c：{{data.c}} 件</p>
+              <p>ruby：{{data.ruby}} 件</p>
+            </div>
+          </div>  
+          <p class="text-end mb-0 small">{{data.date}}</p>
+        </div>
+      </div>
+    {% endfor%}
+    <div class="col-md-4 mx-auto">
+      <div class="card shadow">
+        <img class="car-img-top" src="../static/world.png"　alt="world" title="world">
+        <div class="card-body pb-0 pt-0">
+          <h4 class="text-center mb-3">{{wr_data.country}}</h4>
+          <div class="ml-4 text-left mojikan mt-2">
+            <p>java：{{wr_data.java}} 件</p>
+            <p>python：{{wr_data.python}} 件</p>
+            <p>javascript：{{wr_data.javascript}} 件</p>
+            <p>php：{{wr_data.php}} 件</p>
+            <p>c：{{wr_data.c}} 件</p>
+            <p>ruby：{{wr_data.ruby}} 件</p>
+          </div>
+        </div>  
+        <p class="text-end mb-0 small">{{wr_data.date}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
