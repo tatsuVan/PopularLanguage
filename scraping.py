@@ -5,11 +5,8 @@ import datetime
 from assets.database import db_session
 from assets.models import Data
 import time
-# import numpy as np
-# import matplotlib
-# matplotlib.use('Agg')
 
-
+# Indeedのリンク（国別）
 japan = {
     'python': 'https://jp.indeed.com/%E6%B1%82%E4%BA%BA?q=python&l=',
     'javascript': 'https://jp.indeed.com/%E6%B1%82%E4%BA%BA?q=javascript&l=',
@@ -59,16 +56,19 @@ newzealand = {
     'java': 'https://nz.indeed.com/jobs?q=java&l='
 }
 
-
+# Write_data()にあげる
 Countries_LanguagesLinks = {'japan': japan, 'canada': canada, 'usa': usa,
                             'australia': australia, 'singapore': singapore, 'newzealand': newzealand}
 
 
 def get_number(Country_LanguagesLinks):
+
     results = {}
     country = Country_LanguagesLinks[0]
     LanguagesLinks = Country_LanguagesLinks[1]
+
     for language, link in LanguagesLinks.items():
+        # 日本と英語圏だと抽出方法が変わるのでif文追加
         if country == 'japan':
             url = link
             r_url = requests.get(url)
@@ -79,7 +79,6 @@ def get_number(Country_LanguagesLinks):
             results[language] = offer
 
         elif country == 'canada' or 'usa' or 'australia' or 'singapore' or 'newzealand':
-
             url = link
             r_url = requests.get(url)
             time.sleep(1)
@@ -87,41 +86,26 @@ def get_number(Country_LanguagesLinks):
             offer = soup.select('#searchCountPages')[0].string.split('of')[1]
             offer = int(offer.split('jobs')[0].replace(",", ""))
             results[language] = offer
+
     return results
 
 
 def write_data():
+    # 世界項目用のtotal
     total_python = 0
     total_javascript = 0
     total_php = 0
     total_ruby = 0
     total_c = 0
     total_java = 0
+
+    # for文で国別・言語別にデータを抽出しデータベースに保存。世界項目用にtotalに足していく
     for Country_LanguagesLinks in Countries_LanguagesLinks.items():
         country = Country_LanguagesLinks[0]
         _results = get_number(Country_LanguagesLinks)
-        # labels = ['java', 'python', 'javascript', 'php', 'c', 'ruby']
-        # dicts = {'python':_results["python"], 'javascript':_results["javascript"],'php':_results["php"], 'ruby':_results["ruby"], 'c':_results["c"], 'java':_results["java"]}
-        # x = np.array([total_python,total_javascript,total_php,total_ruby,total_c,total_java])
-        # x = np.array([_results["java"],_results["python"],_results["javascript"],_results["php"],_results["c"],_results["ruby"]])
-
-        # dicts_sorted = sorted(dicts.items(), key = lambda x: x[1], reverse=True)
-        # labels = []
-        # numbers = []
-        # for label, number in dicts_sorted:
-        #     labels.append(label)
-        #     numbers.append(number)
-        # plt.figure()
-        # plt.pie(x, labels=labels, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7, textprops={'fontsize': 18}, radius=2)
-        # plt.rcParams["font.size"] = 18
-        # plt.axis('equal')
-        # dirname = "static/"
-        # filename = dirname + country+".png"
-        # plt.savefig(filename)
         row = Data(date=datetime.datetime.today(), country=country, python=_results["python"], javascript=_results[
                    "javascript"], php=_results["php"], ruby=_results["ruby"], c=_results["c"], java=_results["java"])
         db_session.add(row)
-
         total_python += _results["python"]
         total_javascript += _results["javascript"]
         total_php += _results["php"]
@@ -129,24 +113,7 @@ def write_data():
         total_c += _results["c"]
         total_java += _results["java"]
 
-    # total_offer = total_python + total_javascript + total_php + total_ruby + total_c + total_java
-    # labels = ['java', 'python', 'javascript', 'php', 'c', 'ruby']
-    # x = np.array([total_java,total_python,total_javascript,total_php,total_c,total_ruby])
-    # dicts = {'python':total_python, 'javascript':total_javascript,'php':total_php,'ruby':total_ruby,'c':total_c,'java':total_java}
-    # dicts_sorted = sorted(dicts.items(), key = lambda x: x[1], reverse=True)
-    # labels = []
-    # numbers = []
-    # for label, number in dicts_sorted:
-    #     labels.append(label)
-    #     numbers.append(number)
-    # x = np.array([total_python,total_javascript,total_php,total_ruby,total_c,total_java])
-    # plt.figure()
-    # plt.pie(x, labels=labels, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7, textprops={'fontsize': 18}, radius=2)
-    # plt.rcParams["font.size"] = 18
-    # plt.axis('equal')
-    # dirname = "static/"
-    # filename = dirname + "world.png"
-    # plt.savefig(filename)
+    # 世界用のデータ
     row = Data(date=datetime.datetime.today(), country='world', python=total_python,
                javascript=total_javascript, php=total_php, ruby=total_ruby, c=total_c, java=total_java)
     db_session.add(row)
