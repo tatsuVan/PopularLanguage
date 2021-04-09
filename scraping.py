@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import datetime
 from assets.database import db_session
 from assets.models import Data
+import time
 # import numpy as np
 # import matplotlib
 # matplotlib.use('Agg')
@@ -71,6 +72,7 @@ def get_number(Country_LanguagesLinks):
         if country == 'japan':
             url = link
             r_url = requests.get(url)
+            time.sleep(1)
             soup = BeautifulSoup(r_url.text, 'html.parser')
             offer = soup.select('#searchCountPages')[0].string.split('果')[1]
             offer = int(offer.split('件')[0].replace(",", ""))
@@ -80,6 +82,7 @@ def get_number(Country_LanguagesLinks):
 
             url = link
             r_url = requests.get(url)
+            time.sleep(1)
             soup = BeautifulSoup(r_url.text, 'html.parser')
             offer = soup.select('#searchCountPages')[0].string.split('of')[1]
             offer = int(offer.split('jobs')[0].replace(",", ""))
